@@ -404,6 +404,7 @@ contract ERC20 is Ownable, IERC20, IERC20Metadata {
         _beforeTokenTransfer(address(0), account, amount);
 
         _totalSupply += amount;
+        _circulatingSupply += amount;
         _balances[account] += amount;
         emit Transfer(address(0), account, amount);
 
@@ -432,6 +433,7 @@ contract ERC20 is Ownable, IERC20, IERC20Metadata {
             _balances[account] = accountBalance - amount;
         }
         _totalSupply -= amount;
+        _circulatingSupply -= amount;
 
         emit Transfer(account, address(0), amount);
 
@@ -535,7 +537,7 @@ abstract contract ERC20Burnable is ERC20 {
 
 contract MSDOGE is ERC20Burnable {
     uint256 amount= 10 ** 12 * 10 ** 9;
-    uint256 _circulatingSupply_ = 5 * 10 ** 11 * 10 ** 9;
+    uint256 _circulatingSupply_ = amount;
     uint8 _decimals_ = 9;
     constructor() ERC20("MsDogeCoin", "MSDOGE", 0, _circulatingSupply_, _decimals_) {
         _mint(_msgSender(), amount);
